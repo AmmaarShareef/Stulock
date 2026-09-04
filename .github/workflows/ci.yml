@@ -1,0 +1,15 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      # typecheck, biome, vitest, then the eval harness.
+      # The eval harness gates merges: under 1 false alarm per hour or it does not land.
+      # Spec: section 10.
+      - run: echo "not implemented"

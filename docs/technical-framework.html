@@ -1,0 +1,960 @@
+<title>StuLock Build Spec</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root {
+  --paper:      #ECEDEF;
+  --surface:    #F6F7F8;
+  --surface-2:  #E2E4E8;
+  --ink:        #14171C;
+  --ink-2:      #3D444E;
+  --ink-3:      #6B7482;
+  --rule:       #C6CAD1;
+  --rule-soft:  #DCDFE4;
+  --accent:     #C7371F;
+  --accent-bg:  #F5DDD8;
+  --ok:         #1F6F63;
+  --ok-bg:      #D5E7E3;
+  --warn:       #8A5A00;
+  --warn-bg:    #F0E4C9;
+  --away:       #8E97A4;
+
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --maxw: 1120px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper:     #0E1116;
+    --surface:   #161A21;
+    --surface-2: #1D222B;
+    --ink:       #E6E9ED;
+    --ink-2:     #A9B2BE;
+    --ink-3:     #737E8C;
+    --rule:      #2A313B;
+    --rule-soft: #1E242C;
+    --accent:    #FF6A4D;
+    --accent-bg: #3A1913;
+    --ok:        #4FB3A1;
+    --ok-bg:     #10302B;
+    --warn:      #D9A441;
+    --warn-bg:   #322512;
+    --away:      #59626F;
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper:     #0E1116;
+  --surface:   #161A21;
+  --surface-2: #1D222B;
+  --ink:       #E6E9ED;
+  --ink-2:     #A9B2BE;
+  --ink-3:     #737E8C;
+  --rule:      #2A313B;
+  --rule-soft: #1E242C;
+  --accent:    #FF6A4D;
+  --accent-bg: #3A1913;
+  --ok:        #4FB3A1;
+  --ok-bg:     #10302B;
+  --warn:      #D9A441;
+  --warn-bg:   #322512;
+  --away:      #59626F;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 15.5px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 28px 120px;
+}
+
+/* ---------- spec header ---------- */
+
+.masthead {
+  border-bottom: 2px solid var(--ink);
+  padding: 48px 0 0;
+  margin-bottom: 46px;
+}
+
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.tally {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-bg);
+  flex: none;
+}
+
+h1 {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 7vw, 4.4rem);
+  line-height: 0.98;
+  letter-spacing: -0.028em;
+  margin: 20px 0 0;
+  text-wrap: balance;
+}
+
+.standfirst {
+  font-size: 1.08rem;
+  color: var(--ink-2);
+  max-width: 62ch;
+  margin: 18px 0 34px;
+}
+
+.specgrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  border-top: 1px solid var(--rule);
+  border-left: 1px solid var(--rule);
+}
+.specgrid div {
+  border-right: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  padding: 13px 15px;
+}
+.specgrid dt {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin: 0 0 5px;
+}
+.specgrid dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+  font-family: var(--f-display);
+}
+
+/* ---------- attention strip ---------- */
+
+figure.strip {
+  margin: 40px 0 0;
+  padding-bottom: 42px;
+}
+figure.strip canvas {
+  width: 100%;
+  height: 62px;
+  display: block;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+}
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 20px;
+  margin-top: 12px;
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.legend span { display: flex; align-items: center; gap: 7px; }
+.legend i {
+  width: 11px; height: 11px;
+  display: inline-block;
+  flex: none;
+}
+figcaption {
+  margin-top: 14px;
+  font-size: 13.5px;
+  color: var(--ink-3);
+  max-width: 68ch;
+}
+
+/* ---------- sections ---------- */
+
+section {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 34px;
+  padding: 44px 0;
+  border-top: 1px solid var(--rule);
+}
+section > .rail { position: relative; }
+.rail-inner { position: sticky; top: 26px; }
+.rail-num {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-size: 2.1rem;
+  line-height: 1;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+}
+.rail-label {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-top: 9px;
+}
+
+h2 {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 1.72rem;
+  letter-spacing: -0.021em;
+  line-height: 1.12;
+  margin: 0 0 16px;
+  text-wrap: balance;
+}
+h3 {
+  font-family: var(--f-display);
+  font-weight: 600;
+  font-size: 1.06rem;
+  letter-spacing: -0.008em;
+  margin: 32px 0 12px;
+}
+h3:first-child { margin-top: 0; }
+p { margin: 0 0 14px; max-width: 72ch; }
+.body > *:last-child { margin-bottom: 0; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:focus-visible, summary:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+code {
+  font-family: var(--f-mono);
+  font-size: 0.855em;
+  background: var(--surface-2);
+  padding: 0.1em 0.36em;
+  border-radius: 2px;
+  word-break: break-word;
+}
+
+/* ---------- decision rows ---------- */
+
+.decisions {
+  border-top: 1px solid var(--rule);
+  margin: 0 0 4px;
+}
+.dec {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 8px 24px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  align-items: start;
+}
+.dec-k {
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  padding-top: 2px;
+}
+.dec-v { font-size: 14.6px; }
+.dec-v strong {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: 15.4px;
+}
+.dec-v .why {
+  display: block;
+  color: var(--ink-2);
+  font-size: 13.6px;
+  margin-top: 3px;
+}
+
+/* ---------- tables ---------- */
+
+.scroll { overflow-x: auto; margin: 0 0 18px; border: 1px solid var(--rule); }
+table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 560px;
+  font-size: 13.8px;
+  font-variant-numeric: tabular-nums;
+}
+th, td {
+  text-align: left;
+  padding: 9px 13px;
+  border-bottom: 1px solid var(--rule-soft);
+  vertical-align: top;
+}
+th {
+  font-family: var(--f-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  background: var(--surface);
+  border-bottom: 1px solid var(--rule);
+  white-space: nowrap;
+}
+tbody tr:last-child td { border-bottom: none; }
+td code { background: transparent; padding: 0; color: var(--ink-2); }
+
+/* ---------- tags ---------- */
+
+.tag {
+  font-family: var(--f-mono);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 2px;
+  white-space: nowrap;
+  display: inline-block;
+}
+.t-ok   { background: var(--ok-bg);     color: var(--ok); }
+.t-warn { background: var(--warn-bg);   color: var(--warn); }
+.t-no   { background: var(--accent-bg); color: var(--accent); }
+
+/* ---------- callout ---------- */
+
+.note {
+  border-left: 3px solid var(--accent);
+  background: var(--surface);
+  padding: 15px 18px;
+  margin: 0 0 18px;
+  font-size: 14.2px;
+}
+.note p { max-width: none; }
+.note strong { font-family: var(--f-display); font-weight: 700; }
+
+/* ---------- code block ---------- */
+
+pre {
+  font-family: var(--f-mono);
+  font-size: 12.6px;
+  line-height: 1.65;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 15px 17px;
+  overflow-x: auto;
+  margin: 0 0 18px;
+}
+pre code { background: transparent; padding: 0; font-size: inherit; }
+.cm { color: var(--ink-3); }
+
+/* ---------- lists ---------- */
+
+ul, ol { margin: 0 0 14px; padding-left: 20px; max-width: 72ch; }
+li { margin-bottom: 6px; }
+li::marker { color: var(--ink-3); }
+
+ul.tree {
+  list-style: none;
+  padding-left: 0;
+  font-family: var(--f-mono);
+  font-size: 12.7px;
+  line-height: 1.85;
+  max-width: none;
+}
+ul.tree li { margin: 0; white-space: pre; overflow-x: auto; }
+ul.tree .cm { color: var(--ink-3); }
+
+ol.path { counter-reset: step; list-style: none; padding-left: 0; max-width: none; }
+ol.path li {
+  counter-increment: step;
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--rule-soft);
+  margin: 0;
+}
+ol.path li::before {
+  content: counter(step, decimal-leading-zero);
+  font-family: var(--f-mono);
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--accent);
+  padding-top: 3px;
+}
+ol.path b { font-family: var(--f-display); font-weight: 700; }
+ol.path .why { display: block; color: var(--ink-2); font-size: 13.6px; }
+
+footer {
+  border-top: 2px solid var(--ink);
+  margin-top: 34px;
+  padding-top: 20px;
+  font-family: var(--f-mono);
+  font-size: 11px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 780px) {
+  .wrap { padding: 0 18px 80px; }
+  section { grid-template-columns: 1fr; gap: 14px; padding: 34px 0; }
+  .rail-inner { position: static; display: flex; align-items: baseline; gap: 12px; }
+  .rail-num { font-size: 1.4rem; }
+  .rail-label { margin-top: 0; }
+  .dec { grid-template-columns: 1fr; gap: 3px; }
+}
+</style>
+
+<div class="wrap">
+
+<header class="masthead">
+  <div class="eyebrow"><span class="tally" aria-hidden="true"></span> Decision record · v1.0 · every row is locked</div>
+  <h1>StuLock Build Spec</h1>
+  <p class="standfirst">The complete technical framework for a self-imposed study proctor: webcam attention, device activity, and a task-aware policy engine, fused into one enforcement loop. Nothing here is deferred. Where a choice has real trade-offs, the fallback is pre-selected too.</p>
+
+  <dl class="specgrid">
+    <div><dt>Primary surface</dt><dd>MV3 extension</dd></div>
+    <div><dt>Language</dt><dd>TypeScript, end to end</dd></div>
+    <div><dt>Vision runtime</dt><dd>WebGPU, on-device</dd></div>
+    <div><dt>Backend</dt><dd>Supabase + Vercel</dd></div>
+    <div><dt>Frames uploaded</dt><dd>Zero, ever</dd></div>
+    <div><dt>Ship gate</dt><dd>&lt;1 false alarm/hr</dd></div>
+  </dl>
+
+  <figure class="strip">
+    <canvas id="strip" width="1400" height="124" role="img" aria-label="A session attention timeline: alternating bands of focused, writing, drifting, away and violating states across roughly ninety minutes."></canvas>
+    <div class="legend">
+      <span><i style="background:var(--ok)"></i>Focused</span>
+      <span><i style="background:var(--ok);opacity:.55"></i>Writing</span>
+      <span><i style="background:var(--warn)"></i>Drifting</span>
+      <span><i style="background:var(--away)"></i>Away</span>
+      <span><i style="background:var(--accent)"></i>Violating</span>
+    </div>
+    <figcaption>The attention timeline is the product's signature output and its hardest engineering problem. Every decision below exists to make this strip trustworthy enough to score a person against.</figcaption>
+  </figure>
+</header>
+
+<!-- ============================= 01 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">01</div><div class="rail-label">Shape</div></div></div>
+  <div class="body">
+    <h2>Product shape</h2>
+    <p>StuLock ships as a browser extension first. Not a desktop app, not a phone app. This is the surface that carries the most features for the least build cost, and it is the only one where the enforcement signal you settled on — <code>document.hidden</code> as the violation trigger — is native rather than simulated.</p>
+
+    <div class="decisions">
+      <div class="dec"><div class="dec-k">v1 surface</div><div class="dec-v"><strong>Chrome + Edge MV3 extension</strong><span class="why">One codebase, both stores. No installer, no code signing, no antivirus false positives, no per-OS build matrix.</span></div></div>
+      <div class="dec"><div class="dec-k">v1.1 surface</div><div class="dec-v"><strong>Phone as sensor client (PWA)</strong><span class="why">Top-down desk camera and paper capture over WebRTC. No app store, no Family Controls entitlement, no AccessibilityService.</span></div></div>
+      <div class="dec"><div class="dec-k">v1.2 surface</div><div class="dec-v"><strong>Firefox build</strong><span class="why">Same WXT codebase, different target. Loses Gemini Nano — falls through to the server judge.</span></div></div>
+      <div class="dec"><div class="dec-k">Web app role</div><div class="dec-v"><strong>Marketing, auth, dashboard, phone pairing</strong><span class="why">Not a monitoring surface. A page cannot see sibling tabs; only an extension can.</span></div></div>
+      <div class="dec"><div class="dec-k">Native desktop</div><div class="dec-v"><strong>Not built</strong><span class="why">Revisit only if native-app visibility becomes the top-requested feature. Tauri + a native-messaging host is the path, and nothing in this spec blocks it.</span></div></div>
+    </div>
+
+    <h3>What v1 actually contains</h3>
+    <p>Session contract, calibration wizard, four lockdown tiers (Locked In / Average / Light / Monitor Only), the vision core, phone-jail, present-but-idle detection, tab blocking with the relevance judge, the stuck-to-hint ladder, the intervention ladder, contest-a-flag, the session report, and scoring. The verified leaderboard ships the release after scoring is validated against the eval harness.</p>
+  </div>
+</section>
+
+<!-- ============================= 02 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">02</div><div class="rail-label">Repo</div></div></div>
+  <div class="body">
+    <h2>Monorepo and tooling</h2>
+
+    <div class="scroll"><table>
+      <thead><tr><th>Concern</th><th>Choice</th><th>Why this one</th></tr></thead>
+      <tbody>
+        <tr><td>Package manager</td><td><code>pnpm</code> 9, workspaces</td><td>Strict node_modules prevents phantom deps — which matter when a bundle ships to a store review.</td></tr>
+        <tr><td>Task runner</td><td>Turborepo</td><td>Caches the slow steps (ONNX bundling, Playwright eval) so CI stays under five minutes.</td></tr>
+        <tr><td>Language</td><td>TypeScript 5.x, <code>strict: true</code></td><td>One language across extension, worker, web, edge functions. No Python sidecar anywhere.</td></tr>
+        <tr><td>Lint + format</td><td>Biome</td><td>Replaces ESLint and Prettier with one fast binary. One config file, not five.</td></tr>
+        <tr><td>Unit tests</td><td>Vitest</td><td>Shares the Vite pipeline WXT already uses.</td></tr>
+        <tr><td>E2E + eval</td><td>Playwright</td><td>The only runner that can load an unpacked extension <em>and</em> feed a fake webcam from a file. See §11.</td></tr>
+        <tr><td>Versioning</td><td>Manual semver, single root version</td><td>Solo project. Changesets is overhead without a second maintainer.</td></tr>
+        <tr><td>Node</td><td>22 LTS, pinned via <code>.nvmrc</code></td><td>Matches Vercel and Supabase Edge runtimes closely enough to avoid surprises.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Layout</h3>
+    <ul class="tree">
+      <li>stulock/</li>
+      <li>├─ apps/</li>
+      <li>│  ├─ extension/      <span class="cm"># WXT · MV3 · React · the product</span></li>
+      <li>│  └─ web/            <span class="cm"># Next.js 15 · marketing, dashboard, /cam PWA</span></li>
+      <li>├─ packages/</li>
+      <li>│  ├─ vision/         <span class="cm"># framework-free CV pipeline + worker</span></li>
+      <li>│  ├─ core/           <span class="cm"># XState machines, scoring, shared types</span></li>
+      <li>│  ├─ db/             <span class="cm"># Dexie schema + generated Supabase types</span></li>
+      <li>│  ├─ ui/             <span class="cm"># shadcn components shared by extension + web</span></li>
+      <li>│  └─ eval/           <span class="cm"># labelled clips, harness, metrics report</span></li>
+      <li>├─ supabase/          <span class="cm"># migrations, RLS policies, edge functions</span></li>
+      <li>└─ turbo.json</li>
+    </ul>
+
+    <div class="note"><p><strong>The one rule that keeps this clean:</strong> <code>packages/vision</code> and <code>packages/core</code> must not import anything from <code>chrome.*</code>, React, or the DOM. They take inputs and return values. That is what makes them unit-testable without a browser, and it is what lets the same fusion logic run in the eval harness, the extension, and later a desktop wrapper.</p></div>
+  </div>
+</section>
+
+<!-- ============================= 03 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">03</div><div class="rail-label">Extension</div></div></div>
+  <div class="body">
+    <h2>Extension architecture</h2>
+    <p>MV3 splits your code across five isolated contexts with different lifetimes and capabilities. Getting this partition right up front is the single highest-leverage architectural decision in the project, because moving work between contexts later is a rewrite, not a refactor.</p>
+
+    <div class="scroll"><table>
+      <thead><tr><th>Context</th><th>Lifetime</th><th>Owns</th></tr></thead>
+      <tbody>
+        <tr><td><b>Background service worker</b></td><td>Killed after ~30s idle</td><td>The XState session machine. All <code>chrome.tabs</code> / <code>windows</code> / <code>idle</code> listeners. declarativeNetRequest rule management. The single source of truth.</td></tr>
+        <tr><td><b>Offscreen document</b></td><td>Lives while the session runs</td><td>The camera stream, the vision worker, and Web Audio for the intervention ladder. Declared with <code>reasons: ["USER_MEDIA", "AUDIO_PLAYBACK"]</code>.</td></tr>
+        <tr><td><b>Vision worker</b></td><td>Child of offscreen</td><td>All inference. MediaPipe + ONNX Runtime on an OffscreenCanvas. Never touches the DOM.</td></tr>
+        <tr><td><b>Side panel</b></td><td>User-toggled</td><td>Live session HUD — timer, current state, score, amnesty button. Visible without stealing a tab.</td></tr>
+        <tr><td><b>Content script</b></td><td>Per blocked page</td><td>The block interstitial, the friction unlock, and the justification box.</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="note"><p><strong>An extension is not just a popup.</strong> MV3 ships real HTML pages from <code>chrome-extension://&lt;id&gt;/</code>, and a page there is a full React SPA with routing and the whole viewport — indistinguishable from a hosted web app except for the URL. The dashboard, reports and calibration wizard all live there. It also gains something a hosted app cannot have: being same-origin with the extension, it reads IndexedDB directly, so reports render from local telemetry with no API layer and no network call.</p></div>
+
+    <div class="decisions">
+      <div class="dec"><div class="dec-k">Framework</div><div class="dec-v"><strong>WXT</strong><span class="why">Vite-based. Handles MV3 manifest generation, cross-browser targets, and HMR across contexts — the three things that make raw extension development miserable.</span></div></div>
+      <div class="dec"><div class="dec-k">UI</div><div class="dec-v"><strong>React 19 + Tailwind v4 + shadcn/ui</strong><span class="why">shadcn vendors component source into your repo rather than a dependency, which sidesteps store review questions about bundled third-party code.</span></div></div>
+      <div class="dec"><div class="dec-k">UI state</div><div class="dec-v"><strong>Zustand</strong><span class="why">Per-context view state only. Never session truth — that lives in the service worker.</span></div></div>
+      <div class="dec"><div class="dec-k">Cross-context messaging</div><div class="dec-v"><strong><code>@webext-core/messaging</code></strong><span class="why">Typed request/response over <code>chrome.runtime</code>. Untyped postMessage across five contexts is where this class of project goes to die.</span></div></div>
+      <div class="dec"><div class="dec-k">Charts</div><div class="dec-v"><strong>uPlot + one hand-written canvas renderer</strong><span class="why">The state strip is 5,400 segments for a 90-minute session. That is a canvas problem, not an SVG one. uPlot covers the ordinary time series at ~45KB.</span></div></div>
+      <div class="dec"><div class="dec-k">Service worker death</div><div class="dec-v"><strong>Persist the machine snapshot on every transition</strong><span class="why">Write <code>actor.getPersistedSnapshot()</code> to <code>chrome.storage.session</code>. Rehydrate on wake. Chrome will kill the worker mid-session and this is the only defence.</span></div></div>
+      <div class="dec"><div class="dec-k">Camera ownership</div><div class="dec-v"><strong>One owner at a time, explicit handoff</strong><span class="why">The calibration page owns <code>getUserMedia</code> directly while calibrating — it needs a large live preview with the landmark mesh, and nothing else is running. The offscreen document takes ownership when a session starts.</span></div></div>
+      <div class="dec"><div class="dec-k">Session preview</div><div class="dec-v"><strong>Opt-in mirror at 5 Hz, off by default</strong><span class="why">Offscreen renders the annotated view to an OffscreenCanvas and posts a downscaled <code>ImageBitmap</code> only while a preview is open. A constant self-view is itself a distraction — show it at session start to confirm framing and face lock, then collapse to a status dot.</span></div></div>
+      <div class="dec"><div class="dec-k">Keep-alive</div><div class="dec-v"><strong>Don't fight it — <code>chrome.alarms</code> at 25s</strong><span class="why">Plus the offscreen document's open message port, which holds the worker alive while a session runs.</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================= 04 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">04</div><div class="rail-label">Vision</div></div></div>
+  <div class="body">
+    <h2>The vision pipeline</h2>
+    <p>Four models, one worker, staggered cadences inside a fixed frame budget. Every model file is bundled in the extension package — never fetched from a CDN. The extension CSP forbids remote script, store review punishes remote code, and a student on campus wifi should not need a network round trip to start studying.</p>
+
+    <div class="scroll"><table>
+      <thead><tr><th>Signal</th><th>Model</th><th>Runtime</th><th>Rate</th><th>Feeds</th></tr></thead>
+      <tbody>
+        <tr><td>Face, head pose, eyes</td><td>MediaPipe <code>FaceLandmarker</code></td><td><code>@mediapipe/tasks-vision</code>, GPU delegate</td><td>15 Hz</td><td>Presence, PERCLOS, blink rate, yawn, head pose, gaze features</td></tr>
+        <tr><td>Hands</td><td>MediaPipe <code>HandLandmarker</code></td><td>Same</td><td>10 Hz</td><td>Writing bouts, phone-in-hand, hand-in-notebook-region</td></tr>
+        <tr><td>Objects</td><td>YOLO11n, COCO, ONNX</td><td>onnxruntime-web, WebGPU EP</td><td>2 Hz</td><td>Phone-jail occupancy (<code>cell phone</code>), notebook presence (<code>book</code>)</td></tr>
+        <tr><td>Identity</td><td>MobileFaceNet, ONNX</td><td>onnxruntime-web, WebGPU EP</td><td>0.2 Hz</td><td>Enrolled-face lock — ignore anyone who is not you</td></tr>
+      </tbody>
+    </table></div>
+
+    <div class="note"><p><strong>No OpenCV.</strong> <code>opencv.js</code> is an ~8MB WASM payload for classical operations this pipeline never performs. Phone-jail occupancy is a bounding-box intersection; writing detection reads wrist keypoints rather than pixels; a covered camera is mean luminance on a downscaled frame; notebook occupancy is point-in-rect. MediaPipe and ONNX supply the tensors and landmarks, and the remainder is arithmetic. Reaching for OpenCV here is a signal that something upstream has gone wrong.</p></div>
+
+    <h3>Gaze — no fifth model</h3>
+    <p>A dedicated gaze network is the obvious choice and it is the wrong one. You do not need gaze coordinates; you need to know which region of which screen someone is looking at, at roughly quadrant granularity, for <em>your</em> face on <em>your</em> monitor. That is a calibration problem, not a model problem.</p>
+    <ul>
+      <li><b>Features</b> — head pose yaw/pitch/roll from the facial transformation matrix, the eight <code>eyeLook{In,Out,Up,Down}{Left,Right}</code> blendshapes, and two iris-offset ratios from the landmark mesh. Fourteen numbers.</li>
+      <li><b>Calibration</b> — nine-point, one dot at a time, about 40 seconds. Collect ~30 frames per point.</li>
+      <li><b>Model</b> — ridge regression from those 14 features to normalised screen (x, y). Closed-form normal equations, about 30 lines, no dependency, fits in under 50ms.</li>
+      <li><b>Recalibration</b> — triggered when residual error on a known-good state drifts, or when the user moves. Two points, ten seconds.</li>
+    </ul>
+    <p>This handles the tiled-window bypass (a snapped video window beside the textbook) and the second-monitor case with one mechanism, and it degrades to head-pose-only if the eyes are occluded by glasses glare.</p>
+
+    <h3>Frame plumbing</h3>
+    <pre><code>getUserMedia (offscreen)
+  → MediaStreamTrackProcessor → ReadableStream&lt;VideoFrame&gt;
+  → transfer to Worker (zero-copy)
+  → OffscreenCanvas → per-model tensor
+  → derived features only
+  → throttled to 4 Hz → offscreen → service worker</code></pre>
+    <p>Frames never leave the worker. Landmarks never leave the offscreen document. Only scalar features cross into the service worker, and only aggregates ever reach the network. That containment is both the privacy guarantee and the performance strategy.</p>
+
+    <div class="note"><p><strong>Capture constraints:</strong> 640×480 at 15fps, <code>facingMode: "user"</code>. Higher resolution buys nothing — MediaPipe downsamples internally, and 720p triples your per-frame copy cost for identical landmark accuracy.</p></div>
+  </div>
+</section>
+
+<!-- ============================= 05 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">05</div><div class="rail-label">Fusion</div></div></div>
+  <div class="body">
+    <h2>State machine and fusion</h2>
+
+    <div class="decisions">
+      <div class="dec"><div class="dec-k">Engine</div><div class="dec-v"><strong>XState v5</strong><span class="why">Three interacting hierarchical machines with timed transitions. Hand-rolled booleans become unmaintainable at about week three. XState also renders a diagram, which is the single best artifact you can put in the README.</span></div></div>
+      <div class="dec"><div class="dec-k">Machines</div><div class="dec-v"><strong><code>sessionMachine</code> (parent), <code>attentionMachine</code>, <code>interventionMachine</code></strong><span class="why">Session owns contract and lifecycle. Attention owns the fused state. Intervention owns the escalation ladder and is the only thing allowed to make noise.</span></div></div>
+      <div class="dec"><div class="dec-k">Attention states</div><div class="dec-v"><strong>focused · writing · drifting · idle · away · violating</strong><span class="why">Six states, mutually exclusive, one per second in the log. This enum is your data model, your report, and your eval ground truth. Do not add a seventh without re-labelling the corpus.</span></div></div>
+      <div class="dec"><div class="dec-k">Hysteresis</div><div class="dec-v"><strong>Asymmetric <code>after</code> delays</strong><span class="why">Entering <code>violating</code> takes 3s of sustained evidence. Leaving it takes 2s of compliance. Different thresholds in each direction is what stops buzzer chatter at the boundary.</span></div></div>
+      <div class="dec"><div class="dec-k">Agreement rule</div><div class="dec-v"><strong>Two independent signals, always</strong><span class="why">No intervention fires on a single detector. Gaze plus object, or gaze plus input-idle. This is the rule that keeps you out of Proctorio's failure mode.</span></div></div>
+      <div class="dec"><div class="dec-k">Smoothing</div><div class="dec-v"><strong>5-second ring buffer + EMA per signal</strong><span class="why">Hand-written in <code>packages/core</code>, roughly 40 lines, fully unit-tested. No dependency.</span></div></div>
+    </div>
+
+    <h3>The intervention ladder</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>Rung</th><th>Action</th><th>Fires after</th><th>Clears</th></tr></thead>
+      <tbody>
+        <tr><td>L1</td><td>Side panel state chip turns amber</td><td>Immediately on <code>drifting</code></td><td>Instantly</td></tr>
+        <tr><td>L2</td><td>Soft chime, one shot</td><td>3s in <code>violating</code></td><td>Instantly</td></tr>
+        <tr><td>L3</td><td>Spoken nudge via SpeechSynthesis</td><td>+8s</td><td>Instantly</td></tr>
+        <tr><td>L4</td><td>Continuous buzzer</td><td>+15s</td><td>2s of compliance</td></tr>
+        <tr><td>L5</td><td>Score penalty recorded, flag written</td><td>+30s</td><td>Contestable post-session</td></tr>
+      </tbody>
+    </table></div>
+    <p>In <b>Monitor Only</b> every rung above L1 is disabled and flags are still recorded. That mode exists so a new user can see one honest report before consenting to be buzzed, which is worth far more to retention than it costs in enforcement.</p>
+  </div>
+</section>
+
+<!-- ============================= 06 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">06</div><div class="rail-label">Policy</div></div></div>
+  <div class="body">
+    <h2>Policy engine and the relevance judge</h2>
+
+    <h3>Blocking mechanism</h3>
+    <p><code>chrome.declarativeNetRequest.updateSessionRules()</code>, redirecting to an extension page carrying the URL and reason. Session rules clear themselves when the browser closes, which means a crashed session cannot leave a user permanently locked out of the internet — a failure mode worth designing away rather than apologising for.</p>
+
+    <h3>Three-tier verdict</h3>
+    <ol class="path">
+      <li><div><b>Local rules — free, instant</b><span class="why">The contract's own allowlist and blocklist, plus a shipped table of ~500 obvious domains. Resolves the large majority of navigations with no inference at all.</span></div></li>
+      <li><div><b>Chrome Prompt API / Gemini Nano — free, on-device, ~200ms</b><span class="why"><code>LanguageModel.create()</code> with the task description as context. Nothing leaves the machine. Availability is checked once at session start, not per navigation.</span></div></li>
+      <li><div><b>Server judge — Supabase Edge Function → Anthropic API</b><span class="why">For Edge, Firefox, and any machine where Nano is unavailable or still downloading. Never blocks the navigation: the tab loads, the verdict arrives asynchronously, and a block applies on arrival.</span></div></li>
+    </ol>
+
+    <h3>Caching</h3>
+    <p>Key on <code>sha256(sessionTaskId + eTLD+1)</code> in IndexedDB. One verdict per domain per task, reused for the whole session. A student visiting forty Stack Overflow pages costs exactly one judgement.</p>
+
+    <h3>The server judge</h3>
+    <p>Deno edge function, official TypeScript SDK. The task rubric is a stable prefix and gets a cache breakpoint; the URL and title are the only varying content.</p>
+    <pre><code><span class="cm">// supabase/functions/judge-relevance/index.ts</span>
+import Anthropic from "npm:@anthropic-ai/sdk";
+import { z } from "npm:zod";
+import { zodOutputFormat } from "npm:@anthropic-ai/sdk/helpers/zod";
+
+const Verdict = z.object({
+  verdict: z.enum(["allow", "warn", "block"]),
+  reason: z.string(),
+});
+
+const client = new Anthropic();
+
+const response = await client.messages.parse({
+  model: "claude-opus-5",
+  max_tokens: 256,
+  system: [
+    { type: "text", text: RUBRIC, cache_control: { type: "ephemeral" } },
+  ],
+  messages: [
+    { role: "user", content: `Task: ${task}\nURL: ${url}\nTitle: ${title}` },
+  ],
+  output_config: {
+    effort: "low",
+    format: zodOutputFormat(Verdict),
+  },
+});
+
+return response.parsed_output; <span class="cm">// null if parsing failed — guard it</span></code></pre>
+
+    <div class="note"><p><strong>Model choice is yours to make, not mine.</strong> The spec defaults to <code>claude-opus-5</code> at $5 / $25 per million tokens. This call is roughly 400 input and 40 output tokens, so a heavy user generating 30 uncached verdicts a day costs well under a cent. If you later want that cheaper, <code>claude-haiku-4-5</code> is $1 / $5 with a 200K context and is a reasonable fit for a two-line classification — but that is a deliberate cost-for-quality trade, so make it on purpose rather than by default. Set <code>effort: "low"</code> either way; a relevance verdict does not need deep reasoning.</p></div>
+
+    <h3>Friction, not walls</h3>
+    <p>A <code>block</code> verdict renders the interstitial with three exits: return to task (free), 20-second press-and-hold override (logged, small penalty), or type a one-line justification (logged, shown back in the report). A <code>warn</code> renders a dismissible banner. Every override is a training label for that user's future verdicts.</p>
+  </div>
+</section>
+
+<!-- ============================= 07 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">07</div><div class="rail-label">Data</div></div></div>
+  <div class="body">
+    <h2>Storage, crypto, and what may leave the device</h2>
+
+    <div class="scroll"><table>
+      <thead><tr><th>Store</th><th>Technology</th><th>Contents</th><th>Lifetime</th></tr></thead>
+      <tbody>
+        <tr><td>Hot session state</td><td><code>chrome.storage.session</code></td><td>Persisted XState snapshot</td><td>Cleared on browser close</td></tr>
+        <tr><td>Settings</td><td><code>chrome.storage.local</code></td><td>Contract templates, tier prefs, consent record</td><td>Until uninstall</td></tr>
+        <tr><td>Telemetry</td><td>IndexedDB via <b>Dexie 4</b></td><td>1 Hz state rows, flags, per-question timings</td><td>90-day rolling window, user-configurable</td></tr>
+        <tr><td>Calibration</td><td>IndexedDB</td><td>Gaze regression weights, notebook + phone-jail geometry</td><td>Until recalibrated</td></tr>
+        <tr><td>Face template</td><td>IndexedDB, AES-GCM encrypted</td><td>One 128-float embedding</td><td>Until the user deletes it</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Biometric key handling</h3>
+    <p>Generate a non-extractable AES-GCM <code>CryptoKey</code> at enrolment with <code>crypto.subtle.generateKey(..., false, ...)</code>. CryptoKeys are structured-cloneable, so store the key object itself in IndexedDB — the raw key material is never exposed to JavaScript, not even yours.</p>
+    <p>Deleting that key destroys the template irrecoverably. That single operation <em>is</em> your published destruction schedule, which is a far stronger compliance position than a promise to delete rows on a server.</p>
+
+    <h3>What is permitted to reach the network</h3>
+    <p>An explicit allowlist, enforced by a single serialiser in <code>packages/core</code> that everything must route through. Nothing syncs unless it is on this list.</p>
+    <ul>
+      <li>Session id, start and end timestamps, lockdown tier, declared task text</li>
+      <li>Per-state total durations — six integers</li>
+      <li>Flag count by severity, mean recovery time, final score</li>
+      <li>Subject label, self-reported question count, estimated versus actual duration</li>
+    </ul>
+    <p>Never synced, under any setting: video frames, landmarks, embeddings, gaze coordinates, per-second state rows, URLs, page titles, or justification text. The URL and title reach the judge function transiently and are never persisted server-side.</p>
+  </div>
+</section>
+
+<!-- ============================= 08 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">08</div><div class="rail-label">Backend</div></div></div>
+  <div class="body">
+    <h2>Backend and infrastructure</h2>
+
+    <div class="decisions">
+      <div class="dec"><div class="dec-k">Platform</div><div class="dec-v"><strong>Supabase</strong><span class="why">Postgres, auth, realtime, row-level security and edge functions in one product. Postgres and SQL are also a materially better resume signal than a document store.</span></div></div>
+      <div class="dec"><div class="dec-k">Auth</div><div class="dec-v"><strong>Supabase Auth — email OTP + Google OAuth</strong><span class="why">No password storage. OTP suits students who forget passwords; Google covers the rest.</span></div></div>
+      <div class="dec"><div class="dec-k">Functions</div><div class="dec-v"><strong>Supabase Edge Functions (Deno)</strong><span class="why"><code>judge-relevance</code>, <code>stripe-webhook</code>, <code>submit-session</code>. Still TypeScript.</span></div></div>
+      <div class="dec"><div class="dec-k">Web hosting</div><div class="dec-v"><strong>Next.js 15 App Router on Vercel</strong><span class="why">Shares <code>packages/ui</code> with the extension, so the dashboard and the options page look like one product.</span></div></div>
+      <div class="dec"><div class="dec-k">Payments</div><div class="dec-v"><strong>Stripe Checkout + Customer Portal</strong><span class="why">Chrome Web Store payments no longer exist. Stripe is the only path, and the Portal means you never build billing UI.</span></div></div>
+      <div class="dec"><div class="dec-k">Errors</div><div class="dec-v"><strong>Sentry</strong><span class="why">With a <code>beforeSend</code> hook that strips URLs and page titles from every breadcrumb.</span></div></div>
+      <div class="dec"><div class="dec-k">Analytics</div><div class="dec-v"><strong>PostHog EU, autocapture off</strong><span class="why">Manual events only, from a fixed enum. Autocapture on a study app would harvest exactly the data you promised not to collect.</span></div></div>
+    </div>
+
+    <h3>Schema</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>Table</th><th>Holds</th><th>RLS</th></tr></thead>
+      <tbody>
+        <tr><td><code>profiles</code></td><td>Display name, avatar, timezone, age bracket</td><td>Owner read/write</td></tr>
+        <tr><td><code>sessions</code></td><td>One row per completed session — the allowlist from §7</td><td>Owner only</td></tr>
+        <tr><td><code>daily_aggregates</code></td><td>Rolled up nightly by <code>pg_cron</code></td><td>Owner only</td></tr>
+        <tr><td><code>leaderboard_entries</code></td><td>Display name, verified focused minutes, streak</td><td>Public read via <code>SECURITY DEFINER</code> view; opt-in to appear</td></tr>
+        <tr><td><code>subscriptions</code></td><td>Stripe customer and price ids, status</td><td>Owner read, service-role write</td></tr>
+      </tbody>
+    </table></div>
+    <p>The leaderboard's integrity is the product claim, so <code>submit-session</code> rejects any row whose state durations do not sum to wall-clock, whose focused minutes exceed session length, or that arrives from a client reporting a modified extension hash. It is not unspoofable — nothing client-side is — but it is far beyond the zero verification every competing study leaderboard performs.</p>
+  </div>
+</section>
+
+<!-- ============================= 09 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">09</div><div class="rail-label">Phone</div></div></div>
+  <div class="body">
+    <h2>Phone as camera</h2>
+    <p>The phone's job during a session is to watch you, which is why it cannot be scrolled. Shipping this as a web page rather than an app avoids both stores and both sets of OS restrictions entirely.</p>
+
+    <div class="scroll"><table>
+      <thead><tr><th>Concern</th><th>Choice</th></tr></thead>
+      <tbody>
+        <tr><td>Client</td><td>Route <code>/cam</code> in <code>apps/web</code>, installable PWA</td></tr>
+        <tr><td>Pairing</td><td>Six-digit code shown in the side panel, typed on the phone</td></tr>
+        <tr><td>Signalling</td><td>Supabase Realtime broadcast channel — no separate signalling server</td></tr>
+        <tr><td>Transport</td><td>WebRTC, <code>stun:stun.l.google.com:19302</code></td></tr>
+        <tr><td>Relay</td><td>Cloudflare TURN for the ~10% of networks STUN cannot traverse</td></tr>
+        <tr><td>Screen sleep</td><td><code>navigator.wakeLock.request("screen")</code>, re-acquired on visibilitychange</td></tr>
+        <tr><td>Inference location</td><td>Desktop. The phone is a dumb camera; it encodes and sends nothing else.</td></tr>
+        <tr><td>Disconnect</td><td>Treated as a phone-jail violation after a 10-second grace period</td></tr>
+      </tbody>
+    </table></div>
+    <p>The top-down view is what makes writing-bout detection reliable rather than inferential, and it is the same feed the end-of-session paper capture uses.</p>
+  </div>
+</section>
+
+<!-- ============================= 10 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">10</div><div class="rail-label">Eval</div></div></div>
+  <div class="body">
+    <h2>The evaluation harness</h2>
+    <p>This is the part that separates a demo from a product, and it is also the single most interview-legible thing you will build. It exists because you cannot ship an intervention whose false-alarm rate you cannot state out loud.</p>
+
+    <h3>How it works</h3>
+    <p>Playwright launches Chromium with the unpacked extension and a fake webcam fed from a file:</p>
+    <pre><code>--load-extension=./apps/extension/.output/chrome-mv3
+--use-fake-device-for-media-stream
+--use-file-for-fake-video-capture=./packages/eval/clips/c07.y4m
+--use-fake-ui-for-media-stream</code></pre>
+    <p>Each clip has a sibling <code>c07.labels.json</code> giving ground-truth state per second. The harness runs the session, captures the emitted state stream, diffs it against the labels, and writes a metrics report. It runs in CI and it gates merges.</p>
+
+    <h3>Metrics that gate a release</h3>
+    <div class="scroll"><table>
+      <thead><tr><th>Metric</th><th>Gate</th><th>Why this number</th></tr></thead>
+      <tbody>
+        <tr><td>False alarms per hour</td><td>&lt; 1.0</td><td>Above this, users quit in the first session. This is the product-defining metric.</td></tr>
+        <tr><td>Per-state precision</td><td>&gt; 0.90</td><td>Weighted toward <code>violating</code>, where errors are felt.</td></tr>
+        <tr><td>Notebook-vs-phone recall</td><td>&gt; 0.95</td><td>The hardest confusion, and the one that destroys trust fastest.</td></tr>
+        <tr><td>State latency</td><td>&lt; 1.5s p95</td><td>Slower than this and the buzzer feels arbitrary rather than causal.</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>The corpus — 20 clips, 3 to 5 minutes each</h3>
+    <p>Record these deliberately. They are the specification of correct behaviour, and every one of them is a scenario where a naive implementation fails.</p>
+    <ul>
+      <li>Reading a notebook for two minutes straight <span class="tag t-ok">must not fire</span></li>
+      <li>Eyes closed, thinking, thirty seconds <span class="tag t-ok">must not fire</span></li>
+      <li>Someone walks through frame behind you <span class="tag t-ok">must not fire</span></li>
+      <li>Phone face-down in jail, untouched <span class="tag t-ok">must not fire</span></li>
+      <li>Strong backlight, window behind you <span class="tag t-ok">must not fire</span></li>
+      <li>Glasses with heavy glare <span class="tag t-ok">must not fire</span></li>
+      <li>Drinking, stretching, adjusting posture <span class="tag t-ok">must not fire</span></li>
+      <li>Phone lifted from jail and used <span class="tag t-no">must fire</span></li>
+      <li>Sustained gaze at a snapped window off-centre <span class="tag t-no">must fire</span></li>
+      <li>Present but idle — eyes on page, zero input, four minutes <span class="tag t-warn">must classify as idle</span></li>
+      <li>Leaving the desk entirely <span class="tag t-warn">must classify as away</span></li>
+      <li>Camera physically covered <span class="tag t-warn">must classify as away</span></li>
+    </ul>
+    <p>Record each in two lighting conditions and with at least two people. A detector validated on one face in one room is not validated — that is precisely the mistake the proctoring industry made and never recovered from.</p>
+  </div>
+</section>
+
+<!-- ============================= 11 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">11</div><div class="rail-label">Budget</div></div></div>
+  <div class="body">
+    <h2>Performance budget</h2>
+    <p>Set these as CI assertions on a mid-range reference machine, not as aspirations. A study tool that makes the laptop fan audible has already lost.</p>
+
+    <div class="scroll"><table>
+      <thead><tr><th>Resource</th><th>Ceiling</th><th>Measured how</th></tr></thead>
+      <tbody>
+        <tr><td>CPU, steady state</td><td>&lt; 15% of one core</td><td>Chrome Task Manager, 10-minute session</td></tr>
+        <tr><td>Memory, offscreen + worker</td><td>&lt; 400 MB</td><td><code>performance.measureUserAgentSpecificMemory()</code></td></tr>
+        <tr><td>Bundled model weight</td><td>&lt; 30 MB total</td><td>Build-time assertion on the output directory</td></tr>
+        <tr><td>Cold session start</td><td>&lt; 4s to first state</td><td>Playwright timing</td></tr>
+        <tr><td>Calibration wizard</td><td>&lt; 90s end to end</td><td>Manual, tracked per release</td></tr>
+        <tr><td>Judge verdict, cached</td><td>&lt; 5ms</td><td>Vitest benchmark</td></tr>
+        <tr><td>Judge verdict, Nano</td><td>&lt; 400ms p95</td><td>Never blocks navigation regardless</td></tr>
+      </tbody>
+    </table></div>
+
+    <h3>Degradation ladder</h3>
+    <p>Pre-decided, so the app never simply fails. On a machine without WebGPU, drop ONNX to the WASM SIMD backend and halve the object-detection rate to 1 Hz. If frame processing still exceeds budget, drop <code>FaceLandmarker</code> to 10 Hz, then disable <code>HandLandmarker</code> and mark writing-detection unavailable in the report. If even that fails, offer Monitor Only. The user is told which tier they are on, in plain language, in the side panel.</p>
+  </div>
+</section>
+
+<!-- ============================= 12 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">12</div><div class="rail-label">Legal</div></div></div>
+  <div class="body">
+    <h2>Compliance, built in Phase 0</h2>
+    <p>These are engineering tasks with deadlines, not a launch checklist. Retrofitting consent into a shipped biometric product is the expensive version of this work.</p>
+
+    <div class="scroll"><table>
+      <thead><tr><th>Requirement</th><th>Implementation</th></tr></thead>
+      <tbody>
+        <tr><td>Written specific consent</td><td>Dedicated screen before the camera is ever opened. Its own checkbox, not bundled into terms. Names what is collected (a face template), why, where it is stored, and how to destroy it.</td></tr>
+        <tr><td>Consent record</td><td>Timestamp, policy version, and choice written to <code>chrome.storage.local</code> and mirrored to <code>profiles</code>.</td></tr>
+        <tr><td>Retention schedule</td><td>Published on the web app. Telemetry 90 days rolling; template until deleted; aggregates until account deletion.</td></tr>
+        <tr><td>Destruction</td><td>One button. Deletes the CryptoKey, the encrypted template, and all local telemetry. Verified by an E2E test.</td></tr>
+        <tr><td>Age gate</td><td>Date of birth at signup. Under 13 blocked in v1 — the COPPA verifiable-parental-consent burden is not worth the segment yet, and refusing it is a legitimate choice.</td></tr>
+        <tr><td>Store disclosure</td><td>Chrome Web Store Limited Use declaration plus a single-purpose justification. Camera permission is requested at session start, never at install.</td></tr>
+        <tr><td>Naming</td><td>Trademark search before any brand spend. <b>StudyLock</b> is a live iOS app in this exact category, one character away.</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<!-- ============================= 13 ============================= -->
+<section>
+  <div class="rail"><div class="rail-inner"><div class="rail-num">13</div><div class="rail-label">Learn</div></div></div>
+  <div class="body">
+    <h2>What to learn, in order</h2>
+    <p>Ordered so that each step produces something runnable and nothing is learned before it is needed. Do not read ahead — the later items make far more sense once the earlier ones exist on your disk.</p>
+
+    <ol class="path">
+      <li><div><b>MV3 extension fundamentals</b><span class="why">Manifest, service worker lifecycle, the five contexts, message passing. Build a throwaway extension that logs tab switches before you touch StuLock. The worker's death-and-rehydration behaviour is the concept everything else depends on.</span></div></li>
+      <li><div><b>WXT + React + Tailwind</b><span class="why">Port that throwaway into WXT. Get the popup, side panel and options page rendering. Now you have a shell.</span></div></li>
+      <li><div><b>chrome.tabs / windows / idle / declarativeNetRequest</b><span class="why">This is your entire enforcement layer. Build tier detection — distinguishing a tab switch from leaving the browser — and prove it before any camera code exists.</span></div></li>
+      <li><div><b>MediaPipe Tasks Vision</b><span class="why">FaceLandmarker in a plain web page first, with landmarks drawn on a canvas. Understand blendshapes and the transformation matrix before moving into a worker.</span></div></li>
+      <li><div><b>Offscreen documents + Web Workers + OffscreenCanvas</b><span class="why">Move the working pipeline into the extension. This is the hardest plumbing in the project and it is worth doing slowly.</span></div></li>
+      <li><div><b>Linear regression, by hand</b><span class="why">Normal equations and ridge regularisation. An afternoon of maths that replaces an entire gaze model and gives you something real to explain in an interview.</span></div></li>
+      <li><div><b>XState v5</b><span class="why">Actors, guards, <code>after</code> transitions, persisted snapshots. Model the attention machine on paper first; the diagram is the design.</span></div></li>
+      <li><div><b>onnxruntime-web + WebGPU</b><span class="why">Export YOLO11n, get it running in the worker, measure it. Learn the execution-provider fallback chain here rather than in production.</span></div></li>
+      <li><div><b>Dexie + IndexedDB</b><span class="why">Schema, migrations, bulk writes. You will be writing one row per second, so bulk-write patterns matter immediately.</span></div></li>
+      <li><div><b>Playwright with extensions and fake media</b><span class="why">Build the eval harness the moment the first detector works. Every later change is safe because this exists, and it is the thing that makes the project credible.</span></div></li>
+      <li><div><b>Supabase — Postgres, RLS, Edge Functions</b><span class="why">RLS is the concept to actually understand; it is what makes a public leaderboard over private data safe.</span></div></li>
+      <li><div><b>WebRTC + WebCrypto</b><span class="why">Last, because both are self-contained. Offer/answer/ICE for the phone camera; AES-GCM and non-extractable keys for the face template.</span></div></li>
+    </ol>
+
+    <div class="note"><p><strong>What makes this legible on a resume:</strong> not the feature list — the eval harness. "Built a real-time multi-signal CV pipeline and validated it against a hand-labelled 20-clip corpus at under one false alarm per hour" is a sentence almost no portfolio project can honestly write. Lead with the number, not the idea.</p></div>
+  </div>
+</section>
+
+<footer>
+  <span>StuLock · technical framework v1.0</span>
+  <span>Every decision locked · fallbacks pre-selected</span>
+</footer>
+
+</div>
+
+<script>
+(function () {
+  var c = document.getElementById("strip");
+  if (!c) return;
+  var ctx = c.getContext("2d");
+  var css = getComputedStyle(document.documentElement);
+
+  function draw() {
+    var s = getComputedStyle(document.documentElement);
+    var COL = {
+      focused:   s.getPropertyValue("--ok").trim(),
+      writing:   s.getPropertyValue("--ok").trim(),
+      drifting:  s.getPropertyValue("--warn").trim(),
+      away:      s.getPropertyValue("--away").trim(),
+      violating: s.getPropertyValue("--accent").trim()
+    };
+    var surface = s.getPropertyValue("--surface").trim();
+
+    var w = c.width, h = c.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = surface;
+    ctx.fillRect(0, 0, w, h);
+
+    // deterministic pseudo-random walk over the six states
+    var seed = 20260903;
+    function rnd() {
+      seed = (seed * 1664525 + 1013904223) % 4294967296;
+      return seed / 4294967296;
+    }
+
+    var N = 350;              // segments across the strip
+    var segW = w / N;
+    var state = "focused";
+    var hold = 0;
+
+    for (var i = 0; i < N; i++) {
+      if (hold <= 0) {
+        var r = rnd();
+        // long focused/writing stretches, short interruptions
+        if (r < 0.46)      { state = "focused";   hold = 6 + Math.floor(rnd() * 22); }
+        else if (r < 0.74) { state = "writing";   hold = 5 + Math.floor(rnd() * 18); }
+        else if (r < 0.87) { state = "drifting";  hold = 2 + Math.floor(rnd() * 4); }
+        else if (r < 0.95) { state = "violating"; hold = 1 + Math.floor(rnd() * 3); }
+        else               { state = "away";      hold = 3 + Math.floor(rnd() * 8); }
+      }
+      hold--;
+
+      ctx.globalAlpha = (state === "writing") ? 0.55 : 1;
+      ctx.fillStyle = COL[state];
+      // violations run full height; everything else sits on a baseline band
+      var top = (state === "violating") ? 0 : h * 0.20;
+      var bot = (state === "away") ? h * 0.42 : h;
+      ctx.fillRect(Math.floor(i * segW), top, Math.ceil(segW) + 0.5, bot - top);
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  draw();
+
+  var mq = window.matchMedia("(prefers-color-scheme: dark)");
+  if (mq.addEventListener) mq.addEventListener("change", function () { setTimeout(draw, 30); });
+  new MutationObserver(function () { setTimeout(draw, 30); })
+    .observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+})();
+</script>

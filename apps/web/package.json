@@ -1,0 +1,10 @@
+{
+  "name": "@stulock/web",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "check": "tsc --noEmit"
+  }
+}

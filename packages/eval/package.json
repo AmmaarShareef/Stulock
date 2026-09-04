@@ -1,0 +1,8 @@
+{
+  "name": "@stulock/eval",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": { "check": "tsc --noEmit", "eval": "playwright test" }
+}

@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# build output
+dist/
+.output/
+.next/
+.turbo/
+*.tsbuildinfo
+
+# env / secrets
+.env
+.env.*
+!.env.example
+
+# eval media (large binaries - use git-lfs or keep local)
+packages/eval/clips/*.y4m
+packages/eval/clips/*.mjpeg
+packages/eval/clips/*.mp4
+
+# local scratch
+scratch/
+
+# os / editor
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
