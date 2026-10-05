@@ -1,1 +1,2 @@
-// Marketing page. The pitch: proctoring-grade tech you point at yourself.
+import Link from "next/link";
+export default function HomePage() { return <main className="login-page"><section className="login-card"><div className="login-mark">SL</div><p className="eyebrow">Study with intent</p><h1>StuLock</h1><p>A self-imposed study proctor that helps you keep the contract you made with yourself.</p><Link className="button" href="/admin/login">Admin sign in</Link></section></main>; }

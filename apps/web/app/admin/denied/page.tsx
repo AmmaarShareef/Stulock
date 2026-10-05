@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function AdminDeniedPage() { return <main className="login-page"><section className="login-card"><div className="login-mark">!</div><p className="eyebrow">Access denied</p><h1>You do not have admin access.</h1><p>Ask a StuLock owner to invite you if you need access. This event is not exposed to other users.</p><Link className="button" href="/admin/login">Return to sign in</Link></section></main>; }

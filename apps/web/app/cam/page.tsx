@@ -1,3 +1,1 @@
-// THE PHONE CAMERA. Installable PWA. Enter the 6-digit pairing code, open the
-// camera, stream to the desktop over WebRTC. A dumb camera - no inference here.
-// Needs navigator.wakeLock so the screen does not sleep. Spec: 09.
+export default function CameraPage() { return <main className="login-page"><section className="login-card"><p className="eyebrow">Phone camera</p><h1>Pair a camera</h1><p>This secure pairing screen will be connected to the extension’s WebRTC flow in the camera milestone.</p></section></main>; }

@@ -1,1 +1,1 @@
-// Privacy policy + the published retention and destruction schedule. Spec: 12.
+export default function PrivacyPage() { return <main className="login-page"><section className="login-card"><p className="eyebrow">Privacy</p><h1>Your data stays yours.</h1><p>StuLock’s raw camera data and biometric templates stay on the device. The published consent and retention policy will live here.</p></section></main>; }

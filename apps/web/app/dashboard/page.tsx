@@ -1,2 +1,1 @@
-// Read-only cross-device view built from synced aggregates. The real reports live
-// in the extension, which has the raw local data. Spec: 07, 08.
+export default function DashboardPage() { return <main className="login-page"><section className="login-card"><p className="eyebrow">Your study history</p><h1>Dashboard</h1><p>Your cross-device summaries will appear here once account sync is implemented.</p></section></main>; }

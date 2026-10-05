@@ -1,1 +1,1 @@
-// Stripe Checkout entry. Free tier is the extension in Monitor Only. Spec: 08.
+export default function PricingPage() { return <main className="login-page"><section className="login-card"><p className="eyebrow">Plans</p><h1>Pricing</h1><p>The free monitor-only tier and future paid plans will be available here.</p></section></main>; }

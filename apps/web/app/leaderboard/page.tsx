@@ -1,2 +1,1 @@
-// Machine-verified focused hours. Every competing study leaderboard is trivially
-// faked; this one is not. Opt-in. Spec: 08.
+export default function LeaderboardPage() { return <main className="login-page"><section className="login-card"><p className="eyebrow">Opt-in accountability</p><h1>Leaderboard</h1><p>Machine-verified focused hours will appear here for students who choose to participate.</p></section></main>; }
