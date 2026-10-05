@@ -3,12 +3,20 @@
   "private": true,
   "version": "0.0.0",
   "packageManager": "pnpm@9.0.0",
-  "engines": { "node": ">=22" },
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "dev": "turbo dev",
     "build": "turbo build",
     "check": "turbo check",
     "test": "turbo test",
     "eval": "turbo eval"
+  },
+  "devDependencies": {
+    "@types/node": "22.10.2",
+    "turbo": "2.3.3",
+    "typescript": "5.7.3",
+    "vitest": "2.1.8"
   }
 }

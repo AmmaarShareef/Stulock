@@ -1,15 +1,23 @@
-name: ci
+name: Verify
 
 on:
+  pull_request:
   push:
     branches: [main]
-  pull_request:
 
 jobs:
-  check:
+  quality-gate:
     runs-on: ubuntu-latest
     steps:
-      # typecheck, biome, vitest, then the eval harness.
-      # The eval harness gates merges: under 1 false alarm per hour or it does not land.
-      # Spec: section 10.
-      - run: echo "not implemented"
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm test
+      - run: pnpm --filter @stulock/web build
