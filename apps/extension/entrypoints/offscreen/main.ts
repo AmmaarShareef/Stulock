@@ -1,3 +1,3 @@
-// Owns the camera stream during a session. Spawns the vision worker, forwards derived
-// features to the background at 4Hz. Renders the opt-in 5Hz preview mirror.
-// Never sends frames or landmarks anywhere. Spec: 03, 04.
+// Reserved for Phase 3. This document intentionally does not request media access
+// in Phase 1; camera APIs are unavailable until consent and vision tests exist.
+export {};

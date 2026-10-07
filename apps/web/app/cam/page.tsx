@@ -1,1 +1,2 @@
-export default function CameraPage() { return <main className="login-page"><section className="login-card"><p className="eyebrow">Phone camera</p><h1>Pair a camera</h1><p>This secure pairing screen will be connected to the extension’s WebRTC flow in the camera milestone.</p></section></main>; }
+import { requireOnboardedUser } from "@/lib/auth/user";
+export default async function CameraPage() { await requireOnboardedUser(); return <main className="login-page"><section className="login-card"><p className="eyebrow">Phone camera</p><h1>Camera pairing is not enabled yet.</h1><p>Your account passed the age and consent gate. The actual WebRTC phone camera arrives in Phase 3, after the on-device vision safety work is tested.</p></section></main>; }

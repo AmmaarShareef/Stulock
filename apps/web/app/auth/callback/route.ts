@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 export async function GET(request: Request) {
   const url = new URL(request.url); const code = url.searchParams.get("code"); const next = url.searchParams.get("next");
-  const destination = next?.startsWith("/") ? next : "/admin";
+  const destination = next?.startsWith("/") && !next.startsWith("//") ? next : "/dashboard";
   const response = NextResponse.redirect(new URL(destination, url.origin));
   const projectUrl = process.env.NEXT_PUBLIC_SUPABASE_URL; const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (code && projectUrl && anonKey) {

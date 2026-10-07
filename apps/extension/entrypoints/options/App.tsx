@@ -1,0 +1,4 @@
+import { useState } from "react";
+import { destroyLocalBiometricData } from "../../src/privacy/local-data";
+import "../popup/style.css";
+export function App() { const [message, setMessage] = useState(""); async function destroy() { await destroyLocalBiometricData(); setMessage("Local biometric key and encrypted template have been destroyed."); } return <main className="popup"><p className="eyebrow">Privacy & settings</p><h1>You control the camera.</h1><p className="intro">Phase 1 does not request camera permission. Before Phase 3 can process a camera, your StuLock account must have passed the age gate and separate consent check.</p><button onClick={destroy}>Destroy local biometric data</button>{message && <p className="message">{message}</p>}<p className="privacy">This action cannot be undone. It removes the local encryption key, making any encrypted template unreadable.</p></main>; }

@@ -1,2 +1,1 @@
-// Full React SPA: session reports, the attention timeline, contest-a-flag review,
-// calibration wizard, settings, consent + data deletion. Spec: 03, 07, 12.
+export function App() { return <main style={{ fontFamily: "system-ui", padding: 32, background: "#09111f", color: "#eef4ff", minHeight: "100vh" }}><p style={{ color: "#75e6bf", textTransform: "uppercase", fontSize: 12, fontWeight: 800 }}>Phase 1</p><h1>StuLock extension dashboard</h1><p>The local contract and privacy controls are ready. Reports, timelines, and flag review arrive with the session engine in Phase 2.</p></main>; }

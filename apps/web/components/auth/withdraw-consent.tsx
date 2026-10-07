@@ -1,0 +1,4 @@
+"use client";
+import { useState } from "react";
+import { createSupabaseBrowserClient } from "@/lib/supabase/browser";
+export function WithdrawConsent() { const [message, setMessage] = useState(""); async function withdraw() { const { error } = await createSupabaseBrowserClient().rpc("withdraw_biometric_consent"); setMessage(error ? "We could not withdraw consent. Please try again." : "Consent withdrawn. Open the extension’s Privacy settings to destroy its local biometric key and encrypted template."); } return <section className="withdraw"><h2>Withdraw camera-processing consent</h2><p>Withdrawing consent blocks future camera sessions. Your extension’s local Privacy settings permanently destroy its biometric key and encrypted template.</p><button className="danger-button" onClick={withdraw}>Withdraw consent</button>{message && <p className="form-message">{message}</p>}</section>; }

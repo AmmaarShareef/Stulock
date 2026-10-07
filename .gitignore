@@ -7,6 +7,8 @@ dist/
 .output/
 .next/
 .turbo/
+.wxt/
+supabase/.temp/
 *.tsbuildinfo
 
 # env / secrets
