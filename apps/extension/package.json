@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "wxt",
-    "build": "wxt build",
+    "prepare:vision-assets": "node scripts/prepare-vision-assets.mjs",
+    "dev": "pnpm prepare:vision-assets && wxt",
+    "build": "pnpm prepare:vision-assets && wxt build",
     "zip": "wxt zip",
     "check": "tsc --noEmit",
     "test": "vitest run"
@@ -19,8 +20,10 @@
     "vitest": "2.1.8"
   },
   "dependencies": {
+    "@mediapipe/tasks-vision": "1.1.0",
     "@stulock/core": "workspace:^",
     "@stulock/db": "workspace:^",
+    "@stulock/vision": "workspace:^",
     "@wxt-dev/module-react": "1.2.2",
     "react": "19.1.1",
     "react-dom": "19.1.1",

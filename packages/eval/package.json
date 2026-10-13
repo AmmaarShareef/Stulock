@@ -10,6 +10,7 @@
     "eval": "playwright test"
   },
   "dependencies": {
-    "@stulock/core": "workspace:^"
+    "@stulock/core": "workspace:^",
+    "@stulock/vision": "workspace:^"
   }
 }

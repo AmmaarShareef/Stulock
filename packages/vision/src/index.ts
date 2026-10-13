@@ -1,1 +1,9 @@
-// Public surface of the vision package.
+export * from "./gaze/features";
+export * from "./gaze/ridge";
+export * from "./gaze/calibrate";
+export * from "./signals/presence";
+export * from "./signals/quality";
+export * from "./signals/debounce";
+export * from "./signals/engine";
+export * from "./signals/fatigue";
+export * from "./signals/performance";
