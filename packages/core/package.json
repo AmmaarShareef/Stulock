@@ -4,5 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "main": "./src/index.ts",
-  "scripts": { "check": "tsc --noEmit", "test": "vitest run" }
+  "scripts": {
+    "check": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "xstate": "5.20.2"
+  }
 }

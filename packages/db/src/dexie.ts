@@ -10,16 +10,21 @@ export type LocalConsentRecord = {
 export type BiometricTemplateRecord = { id: "face-template"; encrypted: EncryptedSecret; createdAt: string };
 export type BiometricKeyRecord = { id: "biometric"; key: CryptoKey; createdAt: string };
 export type LocalTelemetryRow = { id?: number; sessionId: string; at: string; event: string; value?: number };
+export type LocalSessionSnapshotRecord = { id: string; status: string; snapshot: unknown; updatedAt: string };
+export type LocalReportRecord = { id: string; sessionId: string; score: number; report: unknown; createdAt: string };
 
 export class StuLockDatabase extends Dexie {
   consent!: EntityTable<LocalConsentRecord, "id">;
   templates!: EntityTable<BiometricTemplateRecord, "id">;
   keys!: EntityTable<BiometricKeyRecord, "id">;
   telemetry!: EntityTable<LocalTelemetryRow, "id">;
+  sessionSnapshots!: EntityTable<LocalSessionSnapshotRecord, "id">;
+  reports!: EntityTable<LocalReportRecord, "id">;
 
   constructor() {
     super("stulock");
     this.version(1).stores({ consent: "id, acceptedAt", templates: "id, createdAt", keys: "id, createdAt", telemetry: "++id, sessionId, at" });
+    this.version(2).stores({ consent: "id, acceptedAt", templates: "id, createdAt", keys: "id, createdAt", telemetry: "++id, sessionId, at", sessionSnapshots: "id, status, updatedAt", reports: "id, sessionId, createdAt, score" });
   }
 
   async destroyBiometricData(): Promise<void> {

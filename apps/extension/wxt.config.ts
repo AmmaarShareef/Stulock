@@ -5,7 +5,7 @@ export default defineConfig({
   manifest: {
     name: "StuLock",
     description: "A self-imposed study contract, kept on your device.",
-    permissions: ["storage", "tabs", "windows", "idle", "offscreen", "sidePanel"],
+    permissions: ["storage", "tabs", "windows", "idle", "alarms", "sidePanel"],
     action: { default_title: "StuLock" },
     side_panel: { default_path: "sidepanel.html" },
   },
