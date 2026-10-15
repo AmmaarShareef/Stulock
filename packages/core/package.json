@@ -9,6 +9,6 @@
     "test": "vitest run"
   },
   "dependencies": {
-    "xstate": "5.20.2"
+    "xstate": "5.33.2"
   }
 }

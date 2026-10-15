@@ -113,8 +113,8 @@ importers:
   packages/core:
     dependencies:
       xstate:
-        specifier: 5.20.2
-        version: 5.20.2
+        specifier: 5.33.2
+        version: 5.33.2
 
   packages/db:
     dependencies:
@@ -2008,8 +2008,8 @@ packages:
       web-ext:
         optional: true
 
-  xstate@5.20.2:
-    resolution: {integrity: sha512-GZmLmc+WPKfFRxuTDAxCg0cUhS/ZnWaRD86DO8MKizeK4a050jd5k7UNnIQ2jJDWRig2/r0tmVXeezUNIhoz5Q==}
+  xstate@5.33.2:
+    resolution: {integrity: sha512-8tC7yXgeCvpT8gKEeEje6ikJJG1wpnoLiXe+HfECW8m10ubMd3QxKOwWA8KxPJVBcLwfdRoMKYxIBGYKmo37/A==}
 
   y18n@5.0.8:
     resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
@@ -3648,7 +3648,7 @@ snapshots:
       - unloader
       - webpack
 
-  xstate@5.20.2: {}
+  xstate@5.33.2: {}
 
   y18n@5.0.8: {}
 
