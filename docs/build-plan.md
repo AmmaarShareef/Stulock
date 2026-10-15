@@ -127,4 +127,4 @@ Verification gate — required for release:
 1. `portable package boundary` verifies the core decision that `packages/core` and `packages/vision` cannot import React or Chrome APIs.
 2. `release gate specification` verifies that the project retains its measurable false-alarm release threshold.
 
-The GitHub Actions workflow runs type checks, tests, and the production web build on every pull request and every push to `main`. Feature-specific tests are intentionally introduced at the start of their associated phase, before the feature code.
+The GitHub Actions workflow runs type checks, tests, the high-severity production dependency audit, and production web and extension builds on every pull request and every push to `main`. Feature-specific tests are intentionally introduced at the start of their associated phase, before the feature code.
