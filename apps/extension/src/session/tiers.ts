@@ -1,14 +1,14 @@
 import type { SessionTier } from "@stulock/core";
 
-export type TierPolicy = Readonly<{ recordsTelemetry: true; blocksPages: false; playsAudio: false; label: string }>;
+export type TierPolicy = Readonly<{ recordsTelemetry: true; blocksPages: boolean; playsAudio: boolean; label: string }>;
 
-/** Tier choices prepare preferences for Phase 4 but remain monitor-only in Phase 2. */
+/** Phase 4 keeps monitor-only passive; higher self-selected tiers escalate proportionally. */
 export function tierPolicy(tier: SessionTier): TierPolicy {
   const labels: Record<SessionTier, string> = {
     monitor: "Monitor only",
-    light: "Light — recording only in Phase 2",
-    average: "Average — recording only in Phase 2",
-    locked: "Locked in — recording only in Phase 2",
+    light: "Light — visual reminders",
+    average: "Average — reminders and repeated-page block",
+    locked: "Locked in — block high-confidence distractions",
   };
-  return { recordsTelemetry: true, blocksPages: false, playsAudio: false, label: labels[tier] };
+  return { recordsTelemetry: true, blocksPages: tier === "average" || tier === "locked", playsAudio: tier === "average" || tier === "locked", label: labels[tier] };
 }

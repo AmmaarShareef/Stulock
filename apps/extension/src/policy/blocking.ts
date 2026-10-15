@@ -1,2 +1,4 @@
-// chrome.declarativeNetRequest.updateSessionRules - session rules clear themselves
-// on browser close so a crash can never lock someone out permanently. Spec: 06.
+import { browser } from "wxt/browser";
+
+export const BLOCKED_PAGE_PATH = "/blocked.html";
+export function blockedPageUrl(): string { return (browser.runtime as unknown as { getURL: (path: string) => string }).getURL(BLOCKED_PAGE_PATH); }

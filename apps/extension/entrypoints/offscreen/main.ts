@@ -1,11 +1,12 @@
 import { browser } from "wxt/browser";
 import { PhonePairPeer } from "../../src/pairing/peer";
 import { LocalVisionRuntime, type LocalVisionStatus } from "../../src/vision/runtime";
+import { playInterventionTone } from "../../src/intervention/audio";
 
 const runtime = new LocalVisionRuntime();
 let phonePair: PhonePairPeer | null = null;
 
-browser.runtime.onMessage.addListener((message: { type?: string; answer?: string }) => {
+browser.runtime.onMessage.addListener((message: { type?: string; answer?: string; level?: number }) => {
   if (message.type === "phase3:offscreen-start") return runtime.start(publishStatus);
   if (message.type === "phase3:offscreen-phone-offer") {
     phonePair = new PhonePairPeer((stream) => void runtime.startWithStream(stream, publishStatus));
@@ -13,6 +14,7 @@ browser.runtime.onMessage.addListener((message: { type?: string; answer?: string
   }
   if (message.type === "phase3:offscreen-phone-answer") return phonePair?.acceptAnswer(message.answer ?? "") ?? Promise.resolve({ ok: false, reason: "missing_offer" });
   if (message.type === "phase3:offscreen-stop") { runtime.stop(); phonePair?.close(); phonePair = null; return Promise.resolve({ ok: true }); }
+  if (message.type === "phase4:offscreen-tone" && (message.level === 2 || message.level === 3 || message.level === 4)) { playInterventionTone(message.level); return Promise.resolve({ ok: true }); }
   return undefined;
 });
 

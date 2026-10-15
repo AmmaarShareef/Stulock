@@ -15,15 +15,19 @@ export type LocalSessionReport = Readonly<{
   pausedMs: number;
   tabSwitches: number;
   timeline: readonly Readonly<{ at: string; label: string }>[];
+  interventions: readonly LocalPolicyEvent[];
   privacy: "Stored only on this device. No URLs, titles, camera data, or browsing history were collected.";
 }>;
 
-export function buildLocalReport(snapshot: MonitorSessionSnapshot): LocalSessionReport {
+export type LocalPolicyEvent = Readonly<{ id: string; sessionId: string; at: string; category: string; verdict: "allow" | "warn" | "block" | "monitor"; action: "none" | "recover" | "notice" | "audio" | "nudge" | "block"; derivedSignal: "local_category" | "judge_unavailable"; policyReason: string; contestPath: string; contested: boolean }>;
+
+export function buildLocalReport(snapshot: MonitorSessionSnapshot, interventions: readonly LocalPolicyEvent[] = []): LocalSessionReport {
   const score = scoreSession({ focusedMs: snapshot.focusedMs, driftingMs: snapshot.driftingMs, idleMs: snapshot.idleMs, awayMs: snapshot.awayMs, activeMs: snapshot.activeMs, tabSwitches: snapshot.tabSwitches });
   return {
     sessionId: snapshot.id, task: snapshot.contract.task, tier: snapshot.contract.tier, score: score.score, focusRatio: score.focusRatio,
     focusedMs: snapshot.focusedMs, activeMs: snapshot.activeMs, breakMs: snapshot.breakMs, pausedMs: snapshot.pausedMs, tabSwitches: snapshot.tabSwitches,
     timeline: snapshot.events.filter((event) => event.type !== "end").map((event) => ({ at: event.at, label: labels[event.type] ?? "Session event" })),
+    interventions,
     privacy: "Stored only on this device. No URLs, titles, camera data, or browsing history were collected.",
   };
 }
