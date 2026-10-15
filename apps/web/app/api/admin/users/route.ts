@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import { requireAdmin, ADMIN_ROLES, type AdminRole } from "@/lib/admin/auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/server";
+import { hasTrustedMutationOrigin } from "@/lib/request-security";
 const json = (error: string, status = 400) => NextResponse.json({ error }, { status });
 export async function POST(request: Request) {
+  if (!hasTrustedMutationOrigin(request)) return json("Invalid origin.", 403);
   const actor = await requireAdmin("admin"); const body = await request.json().catch(() => null) as Record<string, unknown> | null; if (!body) return json("Invalid request.");
   const service = createSupabaseAdminClient(); if (!service) return json("Admin service is not configured.", 503);
   if (body.action === "invite") {

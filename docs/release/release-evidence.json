@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "realWorldCorpus": "pending",
+  "stagingSmoke": "pending",
+  "migrationRehearsal": "pending",
+  "backupRestoreRehearsal": "pending",
+  "cleanDeviceOnboarding": "pending",
+  "consentWithdrawal": "pending",
+  "localKeyDestruction": "pending",
+  "accountDeletionRequest": "pending",
+  "rollbackRehearsal": "pending"
+}

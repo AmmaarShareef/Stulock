@@ -8,6 +8,7 @@ dist/
 .next/
 .turbo/
 .wxt/
+packages/eval/test-results/
 supabase/.temp/
 *.tsbuildinfo
 

@@ -1,16 +1,20 @@
 {
   "name": "@stulock/eval",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "./src/index.ts",
   "scripts": {
     "check": "tsc --noEmit",
-    "test": "vitest run",
-    "eval": "playwright test"
+    "test": "vitest run --exclude e2e/**",
+    "eval": "playwright test",
+    "release:metrics": "vitest run src/release-metrics.test.ts"
   },
   "dependencies": {
     "@stulock/core": "workspace:^",
     "@stulock/vision": "workspace:^"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.57.0"
   }
 }

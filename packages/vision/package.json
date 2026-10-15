@@ -1,7 +1,7 @@
 {
   "name": "@stulock/vision",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "main": "./src/index.ts",
   "scripts": { "check": "tsc --noEmit", "test": "vitest run --passWithNoTests" }

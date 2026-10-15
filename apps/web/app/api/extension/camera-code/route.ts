@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import { createSupabaseServerClient, isSupabaseConfigured } from "@/lib/supabase/server";
+import { hasTrustedMutationOrigin } from "@/lib/request-security";
 
-export async function POST() {
+export async function POST(request: Request) {
+  if (!hasTrustedMutationOrigin(request)) return NextResponse.json({ error: "invalid_origin" }, { status: 403 });
   if (!isSupabaseConfigured()) return NextResponse.json({ error: "not_configured" }, { status: 503 });
   const supabase = await createSupabaseServerClient();
   const { data: { user } } = await supabase!.auth.getUser();
