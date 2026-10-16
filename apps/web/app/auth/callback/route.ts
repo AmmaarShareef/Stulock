@@ -10,7 +10,8 @@ export async function GET(request: Request) {
       getAll: () => request.headers.get("cookie")?.split("; ").map((value) => { const index = value.indexOf("="); return { name: value.slice(0, index), value: value.slice(index + 1) }; }) ?? [],
       setAll: (items) => items.forEach(({ name, value, options }) => response.cookies.set(name, value, options)),
     } });
-    await supabase.auth.exchangeCodeForSession(code);
+    const { error } = await supabase.auth.exchangeCodeForSession(code);
+    if (error) return NextResponse.redirect(new URL("/login?reason=auth", url.origin));
   }
-  return response;
+  return code ? response : NextResponse.redirect(new URL("/login?reason=auth", url.origin));
 }

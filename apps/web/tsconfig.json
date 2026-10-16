@@ -18,6 +18,7 @@
   },
   "include": [
     "app",
+    "proxy.ts",
     "next-env.d.ts",
     ".next/types/**/*.ts"
   ],
